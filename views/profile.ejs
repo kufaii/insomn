@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Hide the form initially */
+        #dynamicForm {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <p>
+        Current username: <%= data[0].username %>
+        <button id="change">change persona</button>
+        <div id="dynamicForm">
+            <form action="/profile/<%= data[0].id %>" method="post">
+                <select name="username">
+                    <option value="bird">bird</option>
+                    <option value="cat">cat</option>
+                    <option value="dog">dog</option>
+                    <option value="insect">insect</option>
+                    <option value="fish">fish</option>
+                </select>
+                <input type="submit" value="change persona">
+            </form>
+        </div>
+    </p>
+    <p>
+        Email: <%= data[0].email %>
+    </p>
+    <p>
+        Role: <%= data[0].role %>
+    </p>
+    <p>
+        Description: <%= data[0].Profile.description %>
+    </p>
+
+    <script>
+        document.getElementById('change').addEventListener('click', function() {
+            // Show the form when the button is clicked
+            document.getElementById('dynamicForm').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

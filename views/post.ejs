@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Hide the form initially */
+        #dynamicForm {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <th>
+                <%= data.title %>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <%= data.content %>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="/post/<%= data.id %>/delete">delete this dreg</a>
+            </td>
+        </tr>
+        <% data.Comments.forEach(el => { %>
+            <tr>
+                <td><%= el.User.username %>: <%= el.content %></td>
+            </tr>
+        <% }) %>
+        <tr>
+            <td>
+                <button id="reply">reply</button>
+                <div id="dynamicForm">
+                    <form action="/post/<%= data.id %>/reply" method="post">
+                        <textarea name="content" rows="4" cols="50" placeholder="reply here...."></textarea>
+                        <input type="submit" value="add post">
+                    </form>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <script>
+        document.getElementById('reply').addEventListener('click', function() {
+            // Show the form when the button is clicked
+            document.getElementById('dynamicForm').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
