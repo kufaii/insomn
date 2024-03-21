@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,5 +16,30 @@
         <input type="text" id="password" name="password">
         <input type="submit" value="login">
     </form>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-sans flex justify-center items-center h-screen">
+    <div class="w-2/5 bg-gray-800 p-8 rounded-xl">
+        <h1 class="text-5xl font-bold mb-4">Insomn</h1>
+        <% if (error) { %>
+            <p class="text-red-500 mb-4"><%= error %></p>
+        <% } %>
+        <form action="/login" method="post">
+            <label for="email" class="block text-lg mb-2">Email:</label>
+            <input type="text" id="email" name="email" class="block w-full px-4 py-2 mb-4 rounded-md bg-gray-700 text-white">
+            <label for="password" class="block text-lg mb-2">Password:</label>
+            <input type="password" id="password" name="password" class="block w-full px-4 py-2 mb-4 rounded-md bg-gray-700 text-white">
+            <input type="submit" value="Login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        </form>
+    </div>
 </body>
 </html>

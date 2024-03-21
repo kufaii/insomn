@@ -39,18 +39,18 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate:{
         notNull: {
-          msg: "Thine electronic missive, thou dullard, cannot remain empty"
+          msg: "Thine electronic missive, thou dullard, cannot remain empty#"
         },
         notEmpty: {
-          msg: "Thine electronic missive, thou dullard, cannot remain empty"
+          msg: "Thine electronic missive, thou dullard, cannot remain empty#"
         },
         len:{
           args: [5, 50],
-          msg: "The email, thou imbecile, must span betwixt five and fifty characters."
+          msg: "The email, thou imbecile, must span betwixt five and fifty characters#"
         },
         isEmailFormat(value) {
           if (!value.includes('@')) {
-            throw new Error('Art thou certain thou hath entered an electronic missive, knave? Wherefore is the @ sign?');
+            throw new Error('Art thou certain thou hath entered an electronic missive, knave? Wherefore is the @ sign?#');
           }
         }
       }
@@ -60,14 +60,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate:{
         notNull: {
-          msg: "The password, thou fool, cannot be left vacant"
+          msg: "The password, thou fool, cannot be left vacant#"
         },
         notEmpty: {
-          msg: "The password, thou fool, cannot be left vacant"
+          msg: "The password, thou fool, cannot be left vacant#"
         },
         len:{
           args: [5, 25],
-          msg: "The password, thou witless wretch, must range between five and twenty-five characters"
+          msg: "The password, thou witless wretch, must range between five and twenty-five characters#"
         }
       }
     },

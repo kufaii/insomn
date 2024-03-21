@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -47,4 +47,93 @@
         <% }) %>
     </table>
 </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-sans flex justify-center">
+    <!-- Sidebar -->
+    <div class="fixed top-0 left-0 w-2/12 h-full bg-transparent p-4 overflow-y-auto z-50 m-8 ml-10">
+        <div class="mx-4">
+            <!-- Sidebar content here -->
+            <h1 class="text-3xl font-bold mb-4">Insomn</h1>
+            <!-- Sidebar links here (posts and add post) -->
+            <div class="mb-8">
+                <h2 class="text-xl mb-2"><a href="/posts">Posts</a></h2>
+                <h2 class="text-xl mb-2"><a href="/profile">Profile</a></h2>
+                <!-- Add post button -->
+                <a href="/post/add">
+                    <button class="fixed bottom-10 left-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 w-2/12">Add Post</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="w-6/12 p-4 margin-auto mr-10">
+        <!-- Flash messages -->
+        <% if (deleted) { %>
+            <h5 style="color: red;"><%= deleted %> has been deleted</h5>
+        <% } %>
+        <% if (error) { %>
+            <h5 style="color: red;"><%= error %></h5>
+        <% } %>
+
+        <!-- Sort and Search forms -->
+        <form action="/posts" method="get" class="mb-4 flex justify-center">
+            <button value="vote" name="sort" type="submit" class="<%= sort == "vote"? "bg-gray-800" : "" %> hover:bg-blue-700 text-white font-bold py-1 px-2 w-2/5 rounded mr-2">Sort by Vote</button>
+            <button value="date" name="sort" type="submit" class="<%= sort == "date"? "bg-gray-800" : "" %> hover:bg-blue-700 text-white font-bold py-1 px-2 w-2/5 rounded mr-2">Sort by New</button>
+        </form>
+
+        <!-- Posts -->
+        <% data.forEach(el => { %>
+            <div class="flex flex-col items-center bg-gray-800 border-gray-200 rounded-lg shadow md:flex-row mb-5">
+              <div class="flex justify-center items-center w-1/6 p-4">
+                <form action="/post/<%= el.id %>/vote?vote=1" method="post">
+                  <button type="submit" class="text-blue-500 hover:text-blue-700 font-bold mr-2">
+                    <svg class="w-6 h-6" fill="#7ed0ec" viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" transform="rotate(-45)" stroke="#7ed0ec"><g id="SVGRepo_bgCarrier" stroke-width="0"><path transform="translate(-2.4, -2.4), scale(0.8999999999999999)" d="M16,24.44332180427093C18.552420806408357,24.202073231140474,21.08591949500767,24.584169077828385,23.311582729343208,23.311582729343208C26.452798923136704,21.51550289831001,30.50901329397769,19.609252417067655,30.766770787537098,16C31.027123342344336,12.354410206463388,27.405463008720886,9.694909170014885,24.436224288576128,7.563775711423874C21.984509779373575,5.804088696019512,19.010082834043118,5.617679188969406,16,5.401337424587263C12.619625429025282,5.1583819182848325,8.587804413747016,3.7966632854258964,6.257206776217911,6.257206776217908C3.9344778180145488,8.709442858049954,5.796792407995996,12.626345646284427,5.961072400604424,15.999999999999998C6.111396145391152,19.08704881230046,4.796662000204794,22.848616870099555,7.161998014331958,24.838001985668036C9.508131059611953,26.81123628791819,12.947987605051669,24.73179055268778,16,24.44332180427093" fill="#000000" strokewidth="0"></path></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M12.781 2.375c-.381-.475-1.181-.475-1.562 0l-8 10A1.001 1.001 0 0 0 4 14h4v7a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-7h4a1.001 1.001 0 0 0 .781-1.625l-8-10zM15 12h-1v8h-4v-8H6.081L12 4.601 17.919 12H15z"></path></g></svg>
+                  </button>
+                </form>
+                <span class="font-sans"><%= toNumber(el.vote) %></span>
+                <form action="/post/<%= el.id %>/vote?vote=-1" method="post">
+                  <button type="submit" class="text-red-500 hover:text-red-700 font-bold ml-2">
+                    <svg class="w-6 h-6" fill="#cf593e" viewBox="-2.4 -2.4 28.80 28.80" xmlns="http://www.w3.org/2000/svg" transform="rotate(-45)" stroke="#cf593e"><g id="SVGRepo_bgCarrier" stroke-width="0" transform="translate(0,0), scale(1)"><path transform="translate(-2.4, -2.4), scale(0.8999999999999999)" d="M16,28.34508202307754C18.19876272823421,28.723914256565752,20.6907931238893,29.72787817094519,22.592682570881138,28.561307158266274C24.51771810427718,27.380538920034205,24.271766501981418,24.450870017382638,25.46981119164787,22.53653870885293C26.601455625125038,20.72830702282807,29.642844649011142,19.753893889133465,29.433140281583515,17.63107853389271C29.203072943808458,15.302130961845556,25.437666489128492,14.920909767098795,24.505440188807373,12.77431201757868C23.641382268171864,10.784682689107353,25.611676462233767,8.246837011688527,24.538974087974363,6.361490738139693C23.500242908324886,4.535851114545881,21.226065024965724,3.315384663388658,19.125610279687024,3.3189006053598096C16.997513292834554,3.322462817557703,15.471462394611073,5.315100051582691,13.628822125314231,6.379753193583392C12.258175588222183,7.171694608629253,10.938928509640101,7.920400084721431,9.627411203943188,8.806834228561101C8.140239195432345,9.811990653398457,6.55059849086436,10.619675687193705,5.363545680524078,11.966124960933058C3.8434111012833267,13.69038194627986,1.66640318463517,15.432159148216064,1.7616051817904967,17.728854136728543C1.855098187281591,19.98432065621794,4.226654365495955,21.428252877786708,5.821971262408521,23.025385984649947C7.2119323357789495,24.416929477875257,8.757657408988536,25.56689479298933,10.500749072696607,26.47794722338739C12.241695094038946,27.387878202324938,14.064123108377633,28.011543275492677,16,28.34508202307754" fill="#000000" strokewidth="0"></path></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M20.901 10.566A1.001 1.001 0 0 0 20 10h-4V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v7H4a1.001 1.001 0 0 0-.781 1.625l8 10a1 1 0 0 0 1.562 0l8-10c.24-.301.286-.712.12-1.059zM12 19.399 6.081 12H10V4h4v8h3.919L12 19.399z"></path></g></svg>
+                  </button>
+                </form>
+              </div>
+                <a href="/post/<%= el.id %>">
+                    <div class="flex flex-col justify-between p-4 leading-normal w-5/6">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight"><%= el.title %></h5>
+                        <p class="mb-3 mr-4 font-normal text-gray-400"><%= el.content %></p>
+                        <div class="text-sm mb-2">
+                        <% el.Tags.forEach(tag => { %>
+                            <span class="bg-gray-700 text-white px-2 py-1 rounded mr-2"><%= tag.name %></span>
+                        <% }) %>
+                    </div>
+                </a>
+              </div>
+            </div>
+          <% }) %>
+          
+    </div>
+
+    <!-- Profile Link -->
+    
+    <div class="fixed top-0 right-0 w-3/12 h-full bg-transparent p-4 overflow-y-auto z-50 mr-10 flex justify-end">
+        <div class="mx-4 flex flex-col space-y-2">  
+            <form action="/posts" method="get" class="w-full mt-8">  
+                <input type="text" name="search" placeholder="Search for title...." class="border border-gray-700 bg-gray-800 text-white px-4 py-2 rounded mr-2">
+                <input type="submit" value="Search" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-5 mt-3 rounded">
+          </form>
+        </div>
+      </div>
+      
+</body>
 </html>
+

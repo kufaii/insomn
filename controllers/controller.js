@@ -16,6 +16,10 @@ class Controller{
     static async handlerLogin(req, res){
         try {
             const {email, password} = req.body
+            if(!email || !password){
+                let msg = "Wherefore art thou email and password, thou witless being?"
+                res.redirect(`/login?error=${msg}`)
+            }
             // let data = await User.findOne({
             //     where:{
             //         email
@@ -38,7 +42,9 @@ class Controller{
     }
     static async register(req, res){
         try {
-            res.render('register')
+            const {error} = req.query
+            console.log(error);
+            res.render('register', {error})
         } catch (error) {
             throw error
         }
@@ -57,7 +63,7 @@ class Controller{
                 let msg = error.errors.map(el=>{
                     return el.message
                 })
-                res.send(msg)
+                res.redirect(`/register?error=${msg}`)
             }else{
                 throw error
             }
@@ -86,7 +92,7 @@ class Controller{
                     },
                     include: Tag})
             }
-            res.render('posts', {data, deleted, error, toNumber})
+            res.render('posts', {data, deleted, error, toNumber, sort})
         } catch (error) {
             throw error
         }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,5 +21,43 @@
         </select>
         <input type="submit" value="register">
     </form>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-sans flex justify-center items-center h-screen">
+    <div class="w-2/5 bg-gray-800 p-8 rounded-xl">
+        <h1 class="text-5xl font-bold mb-4">Insomn</h1>
+        <% if (error) { %>
+            <% error.split('#,').forEach(el => { %>
+                <p class="text-red-500 mb-4"><%= el %></p>
+            <% }) %>
+        <% } %>
+        <form action="/register" method="post">
+            <label for="email" class="block text-lg mb-2">Email:</label>
+            <input type="text" id="email" name="email" class="block w-full px-4 py-2 mb-4 rounded-md bg-gray-700 text-white">
+
+            <label for="password" class="block text-lg mb-2">Password:</label>
+            <input type="password" id="password" name="password" class="block w-full px-4 py-2 mb-4 rounded-md bg-gray-700 text-white">
+
+            <label for="username" class="block text-lg mb-2">Persona:</label>
+            <select name="username" id="username" class="block w-full px-4 py-2 mb-4 rounded-md bg-gray-700 text-white">
+                <option value="bird">Bird</option>
+                <option value="cat">Cat</option>
+                <option value="dog">Dog</option>
+                <option value="insect">Insect</option>
+                <option value="fish">Fish</option>
+            </select>
+
+            <input type="submit" value="Register" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        </form>
+    </div>
 </body>
 </html>
