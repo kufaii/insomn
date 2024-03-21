@@ -22,14 +22,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate:{
         notNull: {
-          msg: "Title cant be null diot"
+          msg: "The title, thou simpleton, cannot be left void"
         },
         notEmpty: {
-          msg: "Title cant be empty diot"
+          msg: "The title, thou simpleton, cannot be left void"
         },
         len:{
           args: [5, 100],
-          msg: "Title must be between 5 and 100 character diot"
+          msg: "The title, thou ignoramus, must range between five and one hundred characters"
         }
 
       }
@@ -39,14 +39,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate:{
         notNull: {
-          msg: "Content cant be null diot"
+          msg: "Empty content, thou ninny, cannot be tolerated"
         },
         notEmpty: {
-          msg: "Content cant be empty diot"
+          msg: "Empty content, thou ninny, cannot be tolerated"
         },
         len:{
           args: [5, 735],
-          msg: "Content must be between 5 and 735 character diot"
+          msg: "Verily, content must span betwixt five and seven hundred thirty-five characters, thou dolt"
         }
       }
     },

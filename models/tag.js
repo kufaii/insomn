@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
       // Tag.hasMany(models.PostTag)
       Tag.belongsToMany(models.Post,{through:models.PostTag})
     }
+    static async all(){
+      let data = await Tag.findAll()
+      return data
+    }
   }
   Tag.init({
     name: DataTypes.STRING

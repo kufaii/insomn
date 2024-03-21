@@ -16,7 +16,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Comment.init({
-    content: DataTypes.STRING,
+    content:{
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate:{
+        notNull: {
+          msg: "The content, thou witless fool, must not remain vacant"
+        },
+        notEmpty: {
+          msg: "The content, thou witless fool, must not remain vacant"
+        },
+        len:{
+          args: [5, 225],
+          msg: "The content, thou simpleton, must span betwixt five and two hundred fifty-five characters in length"
+        }
+      }
+    },
     PostId: DataTypes.INTEGER,
     UserId: DataTypes.INTEGER
   }, {

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,41 +6,49 @@
     <title>Document</title>
 </head>
 <body>
-    <% if (deleted) { %>
-        <h5 style="color: red;"><%= deleted %> has been deleted</h5>
-    <% } %>
-    <form action="/home" method="get">
-        <button value="vote" name="sort" type="submit">Sort by Vote</button>
-        <button value="date" name="sort" type="submit">Sort by Date</button>
-    </form>
-    <form action="/home" method="get">
-        <input type="text" name="search">
-        <input type="submit" value="Search">
-    </form>
-    <table border="1">
-        <% data.forEach(el => { %>
-            <tr>
-                <td>
-                    <form action="/post/<%= el.id %>/vote?vote=1" method="post">
-                        <input type="submit" value="Upvote">
-                    </form> ||
-                    <%= el.vote %> ||
-                    <form action="/post/<%= el.id %>/vote?vote=-1" method="post">
-                        <input type="submit" value="Downvote">
-                    </form>
-                </td>
-                <td>
-                    <%= el.title %> ||
-                    <% el.Tags.forEach(el => { %>
-                       \\<%= el.name %>
-                    <% }) %> ||
-                    <%= el.content %>
-                </td>
-                <td>
-                    <a href="/post/<%= el.id %>">link</a>
-                </td>
-            </tr>
-        <% }) %>
-    </table>
+    <h1>Insomn</h1>
+    <h3>Gather 'round, fellow denizens of the night</h3>
+    <br>
+    <p>
+        This forum-esque web hath been crafted for the sake of our comrades who find themselves unable to succumb to sleep's embrace during the night. 
+        Instead of engaging in the mindless perusal of banal platforms, why not partake in anon discourse about all manner of topics?
+    </p>
+
+
+    <p>
+        Psssttttt... Pssssstttt....... Listen closely... In the near future, access to Insomn shall be restricted solely to the hours betwixt 6 PM and 6 AM. 
+        Furthermore, all posts from the preceding day shall be purged henceforth, ensuring the discourse remains lively and invigorating each night
+    </p>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insomn</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-sans flex justify-center items-center h-screen">
+    <div class="w-full sm:w-2/5 p-8 bg-gray-800 rounded-lg">
+        <h1 class="text-5xl font-bold mb-4">Insomn</h1>
+        <h3 class="text-lg mb-6">Gather 'round, fellow denizens of the night</h3>
+        <p class="text-lg mb-4">
+            This forum-esque web hath been crafted for the sake of our comrades who find themselves unable to succumb to sleep's embrace during the night. 
+            Instead of engaging in the mindless perusal of banal platforms, why not partake in anon discourse about all manner of topics?
+        </p>
+
+        <p class="text-lg mb-8">
+            Psssttttt... Pssssstttt....... Listen closely... In the near future, access to Insomn shall be restricted solely to the hours betwixt 6 PM and 6 AM. 
+            Furthermore, all posts from the preceding day shall be purged henceforth, ensuring the discourse remains lively and invigorating each night
+        </p>
+
+        <div class="bg-gray-700 p-4 rounded-lg">
+            <p class="text-sm">Anon, hast thou possesseth an account? If affirmative, then please proceed to login at this <a href="/login">juncture</a>. If not, create one <a href="/register">hither</a>.</p>
+        </div>
+    </div>
 </body>
 </html>
+

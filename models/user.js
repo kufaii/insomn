@@ -15,6 +15,21 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Profile)
       User.hasMany(models.Comment)
     }
+    get title(){
+      if(this.role == "god"){
+        return "Almighty"
+      } else{
+        return "Pleb"
+      }
+    }
+    static async login(email){
+      let data = await User.findOne({
+        where:{
+            email
+        }
+      })
+      return data
+    }
   }
   User.init({
     username: DataTypes.STRING,
@@ -24,18 +39,18 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate:{
         notNull: {
-          msg: "Email cant be null diot"
+          msg: "Thine electronic missive, thou dullard, cannot remain empty"
         },
         notEmpty: {
-          msg: "Email cant be empty diot"
+          msg: "Thine electronic missive, thou dullard, cannot remain empty"
         },
         len:{
           args: [5, 50],
-          msg: "Email must be between 5 and 50 character diot"
+          msg: "The email, thou imbecile, must span betwixt five and fifty characters."
         },
         isEmailFormat(value) {
           if (!value.includes('@')) {
-            throw new Error('You sure you inputting some email bruh? wheres the @?');
+            throw new Error('Art thou certain thou hath entered an electronic missive, knave? Wherefore is the @ sign?');
           }
         }
       }
@@ -45,14 +60,14 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate:{
         notNull: {
-          msg: "Password cant be null diot"
+          msg: "The password, thou fool, cannot be left vacant"
         },
         notEmpty: {
-          msg: "Password cant be empty diot"
+          msg: "The password, thou fool, cannot be left vacant"
         },
         len:{
           args: [5, 25],
-          msg: "Password must be between 5 and 25 character diot"
+          msg: "The password, thou witless wretch, must range between five and twenty-five characters"
         }
       }
     },

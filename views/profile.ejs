@@ -13,7 +13,7 @@
 </head>
 <body>
     <p>
-        Current username: <%= data[0].username %>
+        Current username: <%= data[0].title %> <%= data[0].username %>
         <button id="change">change persona</button>
         <div id="dynamicForm">
             <form action="/profile/<%= data[0].id %>" method="post">

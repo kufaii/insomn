@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <% if (deleted) { %>
+        <h5 style="color: red;"><%= deleted %> has been deleted</h5>
+    <% } %>
+    <% if (error) { %>
+        <h5 style="color: red;"><%= error %></h5>
+    <% } %>
+    <a href="/logout">Logout</a>
+    <form action="/posts" method="get">
+        <button value="vote" name="sort" type="submit">Sort by Vote</button>
+        <button value="date" name="sort" type="submit">Sort by Date</button>
+    </form>
+    <form action="/posts" method="get">
+        <input type="text" name="search" placeholder="Search for title....">
+        <input type="submit" value="Search">
+    </form>
+    <table border="1">
+        <% data.forEach(el => { %>
+            <tr>
+                <td>
+                    <form action="/post/<%= el.id %>/vote?vote=1" method="post">
+                        <input type="submit" value="Upvote">
+                    </form> ||
+                    <%= toNumber(el.vote) %> ||
+                    <form action="/post/<%= el.id %>/vote?vote=-1" method="post">
+                        <input type="submit" value="Downvote">
+                    </form>
+                </td>
+                <td>
+                    <%= el.title %> ||
+                    <% el.Tags.forEach(el => { %>
+                       \\<%= el.name %>
+                    <% }) %> ||
+                    <%= el.content %>
+                </td>
+                <td>
+                    <a href="/post/<%= el.id %>">link</a>
+                </td>
+            </tr>
+        <% }) %>
+    </table>
+</body>
+</html>

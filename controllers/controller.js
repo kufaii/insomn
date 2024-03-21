@@ -1,7 +1,8 @@
-const { User, Post, Tag, Comment, Profile } = require('../models/')
+const { User, Post, Tag, Comment, Profile, PostTag } = require('../models/')
 const bcrypt = require('bcrypt');
 const { Op } = require("sequelize")
 const session = require("express-session")
+const toNumber = require('../helpers/helper')
 
 class Controller{
     static async login(req, res){
@@ -15,21 +16,19 @@ class Controller{
     static async handlerLogin(req, res){
         try {
             const {email, password} = req.body
-            let data = await User.findOne({
-                where:{
-                    email
-                }
-            })
+            // let data = await User.findOne({
+            //     where:{
+            //         email
+            //     }
+            // })
+            let data = await User.login(email)
             const flag = bcrypt.compareSync(password, data.password)
             if(flag){
-                console.log(req.session, "SESSION SEBELUMMMM");
-                console.log(data);
                 req.session.userId = data.id
                 req.session.role = data.role
-                console.log(req.session, "SESSION sesudahhhhhhhhhhhhhh");
-                res.redirect('/home')
+                res.redirect('/posts')
             }else{
-                let msg = "Password / Email salah"
+                let msg = "Thy password or electronic missive thou hast supplied is incorrect"
                 res.redirect(`/login?error=${msg}`)
             }
             
@@ -52,7 +51,7 @@ class Controller{
                 password,
                 username
             })
-            res.redirect('/home')
+            res.redirect('/login')
         } catch (error) {
             if(error.name == "SequelizeValidationError"){
                 let msg = error.errors.map(el=>{
@@ -66,9 +65,14 @@ class Controller{
     }
     static async home(req, res){
         try {
-            const userId = req.session.userId
-            console.log(userId, "harusnya iddddddddddddddddddddd");
-            const {deleted, sort, search} = req.query
+            res.render('home')
+        } catch (error) {
+            throw error
+        }
+    }
+    static async posts(req, res){
+        try {
+            const {deleted, sort, search, error} = req.query
             let data = await Post.findAll({order:[['vote', 'DESC']],include: Tag})
             if(sort == "date"){
                 data = await Post.findAll({order:[['createdAt', 'DESC']],include: Tag})
@@ -82,7 +86,7 @@ class Controller{
                     },
                     include: Tag})
             }
-            res.render('home', {data, deleted})
+            res.render('posts', {data, deleted, error, toNumber})
         } catch (error) {
             throw error
         }
@@ -90,13 +94,15 @@ class Controller{
     static async postDetail(req, res){
         try {
             const {id} = req.params
+            const role = req.session.role
+            const tags = await Tag.all()
             let data = await Post.findByPk(id, {
                 include: {
                     model: Comment,
                     include: User
                 }
             })
-            res.render('post', {data})
+            res.render('post', {data, role, tags})
         } catch (error) {
             throw error
         }
@@ -115,7 +121,27 @@ class Controller{
                 title,
                 content
             })
-            res.redirect('/home')
+            res.redirect('/posts')
+        } catch (error) {
+            if(error.name == "SequelizeValidationError"){
+                let msg = error.errors.map(el=>{
+                    return el.message
+                })
+                res.send(msg)
+            }else{
+                throw error
+            }
+        }
+    }
+    static async handlerAddPostTag(req, res){
+        try {
+            const {TagId} = req.body
+            const PostId = req.params.id
+            await PostTag.create({
+                TagId,
+                PostId
+            })
+            res.redirect(`/posts`)
         } catch (error) {
             if(error.name == "SequelizeValidationError"){
                 let msg = error.errors.map(el=>{
@@ -131,10 +157,11 @@ class Controller{
         try {
             const {content} = req.body
             const id = req.params.id
+            const UserId = req.session.userId
             await Comment.create({
                 content,
                 PostId: id,
-                UserId: 1
+                UserId
             });// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< UBAH KETIKA SUDAH PAKAI MIDDLEWARE
             res.redirect(`/post/${id}`)
         } catch (error) {
@@ -153,16 +180,17 @@ class Controller{
             const {id} = req.params
             const {vote} = req.query
             await Post.increment('vote', {by:vote, where:{id}});
-            res.redirect('/home')
+            res.redirect('/posts')
         } catch (error) {
             throw error
         }
     }
     static async profile(req, res){
         try {
+            const UserId = req.session.userId 
             let data = await User.findAll({ 
                 where:{
-                    id:2
+                    id: UserId
                 },
                 include: Profile
             })//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< GANTI KETIKA UDAH ADA SESSION
@@ -192,7 +220,20 @@ class Controller{
                     id
                 }
             })
-            res.redirect(`/home?deleted=${deleted.dataValues.title}`)
+            res.redirect(`/posts?deleted=${deleted.dataValues.title}`)
+        } catch (error) {
+            throw error
+        }
+    }
+    static async logout(req, res){
+        try {
+            req.session.destroy((error)=>{
+                if(error){
+                    console.log(error);
+                }else{
+                    res.redirect('/login')
+                }
+            })
         } catch (error) {
             throw error
         }

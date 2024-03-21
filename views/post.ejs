@@ -23,11 +23,21 @@
                 <%= data.content %>
             </td>
         </tr>
-        <tr>
-            <td>
-                <a href="/post/<%= data.id %>/delete">delete this dreg</a>
-            </td>
-        </tr>
+        <% if (role == "god") { %>
+            <tr>
+                <td>
+                    <a href="/post/<%= data.id %>/delete">delete this dreg</a>
+                    <form action="/post/<%= data.id %>/add-tag" method="post">
+                        <select name="TagId">
+                            <% tags.forEach(el => { %>
+                                <option value="<%= el.id %>"><%= el.name %></option>
+                            <% }) %>
+                        </select>
+                        <input type="submit" value="Add tag">
+                    </form>
+                </td>
+            </tr>
+        <% } %>
         <% data.Comments.forEach(el => { %>
             <tr>
                 <td><%= el.User.username %>: <%= el.content %></td>
