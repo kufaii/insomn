@@ -59,21 +59,7 @@
 </head>
 <body class="bg-gray-900 text-white font-sans flex justify-center">
     <!-- Sidebar -->
-    <div class="fixed top-0 left-0 w-2/12 h-full bg-transparent p-4 overflow-y-auto z-50 m-8 ml-10">
-        <div class="mx-4">
-            <!-- Sidebar content here -->
-            <h1 class="text-3xl font-bold mb-4">Insomn</h1>
-            <!-- Sidebar links here (posts and add post) -->
-            <div class="mb-8">
-                <h2 class="text-xl mb-2"><a href="/posts">Posts</a></h2>
-                <h2 class="text-xl mb-2"><a href="/profile">Profile</a></h2>
-                <!-- Add post button -->
-                <a href="/post/add">
-                    <button class="fixed bottom-10 left-12 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 w-2/12">Add Post</button>
-                </a>
-            </div>
-        </div>
-    </div>
+    <%- include('./_sidebar.ejs') %>
 
     <!-- Main Content -->
     <div class="w-6/12 p-4 margin-auto mr-10">
@@ -132,7 +118,7 @@
                 <input type="submit" value="Search" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-5 mt-3 rounded">
           </form>
         </div>
-      </div>
+    </div>
       
 </body>
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -38,13 +38,55 @@
         Description: <%= data[0].Profile.description %>
     </p>
     
-        <!-- Logout link -->
         <a href="/logout" class="text-blue-400 mb-4">Logout</a>
 
     <script>
         document.getElementById('change').addEventListener('click', function() {
             // Show the form when the button is clicked
             document.getElementById('dynamicForm').style.display = 'block';
+        });
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-sans flex justify-center items-center min-h-screen p-10">
+    <%- include('./_sidebar.ejs') %>
+    <div class="max-w-lg bg-gray-800 p-8 rounded-lg">
+        <p class="mb-4">
+            Current username: <%= data[0].title %> <%= data[0].username %>
+            <button id="change" class="hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4">Change persona</button>
+        </p>
+        <div id="dynamicForm" class="hidden">
+            <form action="/profile/<%= data[0].id %>" method="post">
+                <select name="username" class="bg-gray-700 text-white px-4 py-2 rounded mb-4">
+                    <option value="bird">bird</option>
+                    <option value="cat">cat</option>
+                    <option value="dog">dog</option>
+                    <option value="insect">insect</option>
+                    <option value="fish">fish</option>
+                </select>
+                <input type="submit" value="Change persona" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            </form>
+        </div>
+        <p class="mb-4">Email: <%= data[0].email %></p>
+        <p class="mb-4">Role: <%= data[0].role %></p>
+        <p class="mb-4">Description: <%= data[0].Profile.description %></p>
+        <!-- Logout link -->
+        <a href="/logout" class="text-blue-400">Logout</a>
+    </div>
+
+    <script>
+        document.getElementById('change').addEventListener('click', function() {
+            // Show the form when the button is clicked
+            document.getElementById('dynamicForm').classList.toggle('hidden');
         });
     </script>
 </body>

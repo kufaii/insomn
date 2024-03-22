@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,5 +13,31 @@
         <textarea name="content" rows="4" cols="50" placeholder="Text here...."></textarea>
         <input type="submit" value="add post">
     </form>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-sans flex justify-center items-center min-h-screen">
+    <%- include('./_sidebar.ejs') %>
+    <div class="w-full max-w-md p-8 bg-gray-800 rounded-t-lg">
+        <form action="/post/add" method="post">
+            <div class="mb-4">
+                <label for="title" class="block text-gray-300 mb-2">Title:</label>
+                <input type="text" id="title" name="title" class="bg-gray-700 text-white px-4 py-2 rounded w-full">
+            </div>
+            <div class="mb-4">
+                <label for="content" class="block text-gray-300 mb-2">Content:</label>
+                <textarea name="content" id="content" rows="4" cols="50" placeholder="Text here...." class="bg-gray-700 text-white px-4 py-2 rounded w-full"></textarea>
+            </div>
+            <input type="submit" value="Add Post" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+        </form>
+    </div>
 </body>
 </html>

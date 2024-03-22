@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -55,6 +55,73 @@
             </td>
         </tr>
     </table>
+
+    <script>
+        document.getElementById('reply').addEventListener('click', function() {
+            // Show the form when the button is clicked
+            document.getElementById('dynamicForm').style.display = 'block';
+        });
+    </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Hide the form initially */
+        #dynamicForm {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white font-sans flex justify-center">
+    <%- include('./_sidebar.ejs') %>
+    <div class="w-6/12 p-4 margin-auto mr-10">
+        <table class="w-full">
+            <tr>
+                <th class="p-4 bg-gray-700 text-lg font-semibold text-center rounded-t-lg" colspan="2"><%= data.title %></th>
+            </tr>
+            <tr>
+                <td class="p-4 flex flex-col items-center bg-gray-800 border-gray-200 rounded-b-lg shadow md:flex-row mb-5" colspan="2"><%= data.content %></td>
+            </tr>
+            <% if (role == "god") { %>
+                <tr>
+                    <td class="p-4" colspan="2">
+                        <a href="/post/<%= data.id %>/delete" class="text-red-500">Delete this dreg</a>
+                        <form action="/post/<%= data.id %>/add-tag" method="post" class="mt-4">
+                            <select name="TagId" class="bg-gray-700 text-white px-4 py-2 rounded">
+                                <% tags.forEach(el => { %>
+                                    <option value="<%= el.id %>"><%= el.name %></option>
+                                <% }) %>
+                            </select>
+                            <input type="submit" value="Add tag" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4">
+                        </form>
+                    </td>
+                </tr>
+            <% } %>
+            <% data.Comments.forEach((el,i) => { %>
+                <tr>
+                    <td class="<%= i%2 == 0?"rounded-br-lg bg-blue-600" : "rounded-bl-lg bg-indigo-400" %> py-2 px-3 flex flex-col items-center  rounded-tl-lg rounded-tr-lg shadow md:flex-row mb-3" colspan="2"><%= el.User.username %>: <%= el.content %></td>
+                </tr>
+            <% }) %>
+            <tr>
+                <td class="p-4" colspan="2">
+                    <button id="reply" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Reply</button>
+                    <div id="dynamicForm" class="mt-4">
+                        <form action="/post/<%= data.id %>/reply" method="post">
+                            <textarea name="content" rows="4" cols="50" placeholder="Reply here...." class="bg-gray-700 text-white px-4 py-2 rounded"></textarea>
+                            <input type="submit" value="Add post" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2">
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
 
     <script>
         document.getElementById('reply').addEventListener('click', function() {
